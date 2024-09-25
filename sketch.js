@@ -25,7 +25,7 @@ class Vector2D {
 }
 
 class World {
-    constructor(frictionCoeff = 0.99, gravity = 500) {
+    constructor(frictionCoeff = 0.99, gravity = 100) {
         this.frictionCoeff = frictionCoeff;
         this.gravity = gravity;
         this.points = [];
@@ -56,10 +56,10 @@ class Point {
     collide(point) {
         let d = point.pos.sub(this.pos);
         let dd = d.dist_squared();
-        if (0 < dd < (this.radius + point.radius) ** 2) {
+        if (0 < dd && dd < (this.radius + point.radius) ** 2) {
             d = d.div(Math.sqrt(dd));
             let i1 = this.pos.add(d.mult(this.radius));
-            let i2 = point.pos.add(d.mult(point.radius));
+            let i2 = point.pos.sub(d.mult(point.radius));
             let midpoint = i1.mult(this.mass).add(i2.mult(point.mass)).div(this.mass+point.mass);
             this.pos = midpoint.sub(d.mult(this.radius));
             point.pos = midpoint.add(d.mult(point.radius));
@@ -67,7 +67,7 @@ class Point {
     }
     render () {
         ctx.strokeStyle = 'black';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1;
         ctx.fillStyle = 'white';
         ctx.beginPath();
         ctx.arc(this.pos.x, this.pos.y, this.radius, 0, Math.PI*2);
@@ -84,15 +84,21 @@ canvas.width = 600;
 canvas.height = 600;
 
 let world = new World();
-new Point(world, new Vector2D(10, 10), 10);
-new Point(world, new Vector2D(30, 10), 10);
-new Point(world, new Vector2D(50, 10), 10);
-new Point(world, new Vector2D(70, 10), 10);
 
+canvas.onclick = function(evt) {
+    new Point(world, new Vector2D(evt.offsetX, evt.offsetY), 20);
+}
 function update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (i of world.points) {
         i.update();
+    }
+    for (i of world.points) {
+        for (j of world.points) {
+            if (i != j) {
+                i.collide(j);
+            }
+        }
     }
     for (i of world.points) {
         i.render();
