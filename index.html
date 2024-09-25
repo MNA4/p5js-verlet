@@ -7,15 +7,23 @@
   </head>
   <body>
     <div class = "canvas-container">
-      <div class="btn-group">
-        <div>
+      <div class="tool-group">
           <button class="material-symbols-rounded">select</button>
           <button class="material-symbols-rounded">diagonal_line</button>
           <button class="material-symbols-rounded">fiber_manual_record</button>
+      </div>
+      <div class = "header">
+        <div class = "control-group">
+          <button id="skip" class="material-symbols-rounded">
+            skip_next
+          </button>
+          <button id="play_button" class="material-symbols-rounded">
+            play_arrow
+          </button>
+          <button id="stop" class="material-symbols-rounded">
+            stop
+          </button>
         </div>
-        <button id="play_button" class="material-symbols-rounded">
-          play_arrow
-        </button>
       </div>
       <canvas id="myCanvas"></canvas>
     </div>
