@@ -1,11 +1,19 @@
 let playing = false;
 let stopped = true;
 const style = getComputedStyle(document.body);
+
 const controls = {
     step: document.getElementById('skip'),
     play: document.getElementById('play'),
     stop: document.getElementById('stop')
 }
+const tools = {
+    settings: document.getElementById('settings'),
+    select: document.getElementById('select'),
+    segment: document.getElementById('segment'),
+    point: document.getElementById('point')
+}
+let selectedTool = -1;
 controls.step.onclick = function () {
     if (!stopped) {
         playing = false;
@@ -36,6 +44,11 @@ controls.stop.onclick = function() {
     stopped = true;
     playing = false;
     controls.play.textContent = 'play_arrow';
+}
+for (let k in tools) {
+    tools[k].onclick = function() {
+        selectedTool = k;
+    }
 }
 canvas.onclick = function(evt) {
     new Point(world, new Vector2D(evt.offsetX, evt.offsetY), 7);

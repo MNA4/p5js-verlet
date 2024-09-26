@@ -9,14 +9,6 @@
   --active: #327acd;
 }
 
-.tool-group button {
-  border: none;
-  width: 30px;
-  height: 30px;
-  padding: 0;
-  display: block;
-  margin-bottom: 4px;
-}
 .control-group button {
   border: none;
   background-color: var(--bg1);
@@ -41,9 +33,31 @@
   grid-row: 2;
   grid-column: 2;
 }
-.material-symbols-rounded {
-  color: var(--icons);
+.tool-group>span {
+  display: block;
+  margin-bottom: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  position: relative;
 }
+
+.tool-group>span>input {
+  position: absolute;
+  cursor: pointer;
+  margin: 0;
+  opacity: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.checkmark {
+  padding: 4px;
+}
+
 .header {
   padding: 4px;
   text-align: center;
@@ -55,7 +69,7 @@ body {
   background-color: black;
   color: var(--fg);
 }
-button {
+button, .checkmark{
   transition: 0.2s;
   background-color: transparent;
   border-radius: 4px;
@@ -63,16 +77,21 @@ button {
   color: var(--fg);
   user-select: none;
 }
-button:hover:not(:disabled){
+button:active, .tool-group>span>input:active ~ .checkmark {
+  background-color: var(--active);
+}
+button:hover:not(:disabled):not(:active), .tool-group>span>input:hover ~ .checkmark, .tool-group>span>input:checked ~ .checkmark{
   background-color: var(--hover);
   color: var(--fg);
-}
-button:active {
-  background-color: var(--active);
 }
 button:disabled {
   background-color: transparent;
 }
+
+.material-symbols-rounded {
+  color: var(--icons);
+}
+
 #myCanvas {
   background-color: var(--bg2);
   grid-row: 2;
