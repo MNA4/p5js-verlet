@@ -80,7 +80,7 @@ button, .checkmark{
 button:active, .tool-group>span>input:active ~ .checkmark {
   background-color: var(--active);
 }
-button:hover:not(:disabled):not(:active), .tool-group>span>input:hover ~ .checkmark, .tool-group>span>input:checked ~ .checkmark{
+button:hover:not(:disabled):not(:active), .tool-group>span>input:hover:not(:active) ~ .checkmark, .tool-group>span>input:checked ~ .checkmark{
   background-color: var(--hover);
   color: var(--fg);
 }
