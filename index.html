@@ -8,25 +8,28 @@
   <body>
     <div class = "canvas-container">
       <div class="tool-group">
-          <button class="material-symbols-rounded">select</button>
-          <button class="material-symbols-rounded">diagonal_line</button>
-          <button class="material-symbols-rounded">fiber_manual_record</button>
+          <button class="material-symbols-rounded" title = "Document Settings">settings</button>
+          <button class="material-symbols-rounded" title = "Select Objects">arrow_selector_tool</button>
+          <button class="material-symbols-rounded" title = "Connect Points">diagonal_line</button>
+          <button class="material-symbols-rounded" title = "Add New Points">circle</button>
+
       </div>
       <div class = "header">
         <div class = "control-group">
-          <button id="skip" class="material-symbols-rounded">
+          <button id="skip" class="material-symbols-rounded" title = "Step" disabled>
             skip_next
           </button>
-          <button id="play_button" class="material-symbols-rounded">
+          <button id="play" class="material-symbols-rounded" title = "Play">
             play_arrow
           </button>
-          <button id="stop" class="material-symbols-rounded">
+          <button id="stop" class="material-symbols-rounded" title = "Stop" disabled>
             stop
           </button>
         </div>
       </div>
-      <canvas id="myCanvas"></canvas>
+      <canvas id="myCanvas" width = "600" height = "600"></canvas>
     </div>
-  <script src="sketch.js"></script>
+    <script src="physics.js"></script>
+    <script src="controls.js"></script>
   </body>
 </html>

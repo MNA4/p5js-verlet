@@ -30,6 +30,24 @@ class World {
         this.gravity = gravity;
         this.points = [];
     }
+    updatePhysics() {
+        for (let i of this.points) {
+            i.update();
+        }
+        for (let i of this.points) {
+            for (let j of this.points) {
+                if (i != j) {
+                    i.collide(j);
+                }
+            }
+        }
+    }
+    renderObjects() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i of this.points) {
+            i.render();
+        }
+    }
 }
 
 class Point {
@@ -66,44 +84,25 @@ class Point {
         }
     }
     render () {
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 1;
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = style.getPropertyValue('--icons');
         ctx.beginPath();
         ctx.arc(this.pos.x, this.pos.y, this.radius, 0, Math.PI*2);
         ctx.closePath();
         ctx.fill();
-        ctx.stroke();
     }
 }
 
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = 600;
-canvas.height = 600;
-
 let world = new World();
 
-canvas.onclick = function(evt) {
-    new Point(world, new Vector2D(evt.offsetX, evt.offsetY), 20);
+function loop() {
+    if (playing) {
+        world.updatePhysics();
+        world.renderObjects();
+    }
+    if (!stopped) {
+        requestAnimationFrame(loop);
+    }
 }
-function update() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (i of world.points) {
-        i.update();
-    }
-    for (i of world.points) {
-        for (j of world.points) {
-            if (i != j) {
-                i.collide(j);
-            }
-        }
-    }
-    for (i of world.points) {
-        i.render();
-    }
-    requestAnimationFrame(update);
-}
-
-window.onload = update;
