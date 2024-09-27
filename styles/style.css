@@ -86,6 +86,7 @@ input[type="number"] {
   outline: none;
   transition: border-color 0.2s;
   -moz-appearance: textfield; 
+  appearance: textfield; 
 }
 input[type="number"]:focus {
   border-color: var(--hover);

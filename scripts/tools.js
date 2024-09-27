@@ -99,11 +99,9 @@ class PointTool {
         const m = this.clickV.sub(v).distManhattan() < 1;
 
         if (s == -1) {
-            if (!shiftKey){
+            if (!shiftKey && m){
                 if (this.selections.selectedPoints.length > 1) {
-                    if (m) {
-                        this.selections.selectedPoints = [];
-                    }
+                    this.selections.selectedPoints = [];
                 }
                 else {
                     this.selections.addPoint(v, 20);
