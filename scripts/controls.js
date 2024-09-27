@@ -7,24 +7,31 @@ const controls = {
     stop: document.getElementById('stop')
 }
 controls.step.onclick = function () {
-    if (!stopped) {
+    if (stopped) {
+        controls.stop.removeAttribute('disabled');
+        selectionManager.reloadSave();
+        stopped = false;
+        playing = false;
+        requestAnimationFrame(loop);
+        world.updatePhysics();
+        world.renderObjects();
+    } else {
         playing = false;
         controls.play.textContent = 'play_arrow';
         world.updatePhysics();
         world.renderObjects();
-    }
+    } 
 }
 controls.play.onclick = function() {
     if (controls.play.textContent != 'pause') {
         controls.play.textContent = 'pause';
+        controls.stop.removeAttribute('disabled');
         if (stopped) {
+            selectionManager.reloadSave();
             requestAnimationFrame(loop);
         }
-        controls.stop.removeAttribute('disabled');
-        controls.step.removeAttribute('disabled');
         stopped = false;
         playing = true;
-        selectionManager.reloadSave();
     }
     else {
         playing = false;
@@ -32,7 +39,6 @@ controls.play.onclick = function() {
     }
 }
 controls.stop.onclick = function() {
-    controls.step.toggleAttribute('disabled', true);
     controls.stop.toggleAttribute('disabled', true);
     stopped = true;
     playing = false;
