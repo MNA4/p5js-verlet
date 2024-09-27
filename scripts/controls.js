@@ -1,19 +1,11 @@
 let playing = false;
 let stopped = true;
-const style = getComputedStyle(document.body);
 
 const controls = {
     step: document.getElementById('skip'),
     play: document.getElementById('play'),
     stop: document.getElementById('stop')
 }
-const tools = {
-    settings: document.getElementById('settings'),
-    select: document.getElementById('select'),
-    segment: document.getElementById('segment'),
-    point: document.getElementById('point')
-}
-let selectedTool = -1;
 controls.step.onclick = function () {
     if (!stopped) {
         playing = false;
@@ -32,6 +24,7 @@ controls.play.onclick = function() {
         controls.step.removeAttribute('disabled');
         stopped = false;
         playing = true;
+        selectionManager.reloadSave();
     }
     else {
         playing = false;
@@ -44,9 +37,7 @@ controls.stop.onclick = function() {
     stopped = true;
     playing = false;
     controls.play.textContent = 'play_arrow';
-}
-for (let k in tools) {
-    tools[k].onclick = function() {
-        selectedTool = k;
-    }
+    selectionManager.reloadStructure();
+    world.renderObjects();
+    selectionManager.drawSelections();
 }

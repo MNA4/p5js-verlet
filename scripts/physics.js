@@ -18,8 +18,11 @@ class Vector2D {
     clone() {
         return new Vector2D(this.x, this.y);
     }
-    dist_squared() {
+    distSquared() {
         return this.x**2 + this.y**2;
+    }
+    distManhattan() {
+        return Math.abs(this.x)+Math.abs(this.y);
     }
 
 }
@@ -73,7 +76,7 @@ class Point {
     }
     collide(point) {
         let d = point.pos.sub(this.pos);
-        let dd = d.dist_squared();
+        let dd = d.distSquared();
         if (0 < dd && dd < (this.radius + point.radius) ** 2) {
             d = d.div(Math.sqrt(dd));
             let i1 = this.pos.add(d.mult(this.radius));
@@ -94,6 +97,7 @@ class Point {
 
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
+const style = getComputedStyle(document.body);
 
 let world = new World();
 

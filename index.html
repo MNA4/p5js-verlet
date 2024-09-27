@@ -2,34 +2,45 @@
 <html lang="en">
   <head>
     <link rel="stylesheet" type="text/css" href="styles/style.css">
-    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,200,0,0" /> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20,400,0,-25" />
     <meta charset="utf-8" />
   </head>
   <body>
     <div class = "canvas-container">
+      <div class="details">
+        <label>Attributes</label><hr>
+        <div style = "display: grid; grid-template-columns: repeat(4,auto); grid-gap:4px; align-items: baseline;">
+        <label>x: </label><input type = "number">
+        <label>y: </label><input type = "number">
+        <label>radius: </label><input type = "number">
+        <label>mass: </label><input type = "number">
+        </div>
+      </div>
       <div class="tool-group">
           <span>
-            <input id = "settings" type="radio" name="tools">
-            <span class="material-symbols-rounded checkmark" title = "Document Settings">
+            <input id = "settings" type="radio" name="tools" title = "Document Settings">
+            <span class="material-symbols-rounded checkmark">
               settings
             </span>
           </span>
           <span>
-            <input id = "select" type="radio" name="tools">
-            <span class="material-symbols-rounded checkmark" title = "Select Objects">
+            <input id = "select" type="radio" name="tools" title = "Select Objects">
+            <span class="material-symbols-rounded checkmark">
             arrow_selector_tool
             </span>
           </span>
           <span>
-            <input id = "segment" type="radio" name="tools">
-            <span class="material-symbols-rounded checkmark" title = "Connect Points">
+            <input id = "segment" type="radio" name="tools" title = "Connect Points">
+            <span class="material-symbols-rounded checkmark">
               diagonal_line
             </span>
           </span>
           <span>
-            <input id = "point" type="radio" name="tools">
-            <span class="material-symbols-rounded checkmark" title = "Add New Points">
+            <input id = "point" type="radio" name="tools" title = "Add New Points" checked>
+            <span class="material-symbols-rounded checkmark">
               circle
             </span>
           </span>
