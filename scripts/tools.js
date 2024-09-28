@@ -48,6 +48,54 @@ class Selections {
         }
     }
 }
+class SettingsTool {
+    constructor (selections) {
+        this.world = selections.world;
+        this.selections = selections;
+        this.id = 'settings';
+    }
+    onmousedown (evt) {
+
+    }
+    onmousemove (evt) {
+
+    }
+    onmouseup (evt) {
+        
+    }
+}
+class SelectTool {
+    constructor (selections) {
+        this.world = selections.world;
+        this.selections = selections;
+        this.id = 'select';
+    }
+    onmousedown (evt) {
+
+    }
+    onmousemove (evt) {
+
+    }
+    onmouseup (evt) {
+        
+    }
+}
+class SegmentTool {
+    constructor (selections) {
+        this.world = selections.world;
+        this.selections = selections;
+        this.id = 'segment';
+    }
+    onmousedown (evt) {
+
+    }
+    onmousemove (evt) {
+
+    }
+    onmouseup (evt) {
+
+    }
+}
 class PointTool {
     constructor (selections) {
         this.world = selections.world;
@@ -104,7 +152,7 @@ class PointTool {
                     this.selections.selectedPoints = [];
                 }
                 else {
-                    this.selections.addPoint(v, 20);
+                    this.selections.addPoint(v, 10);
                     this.selections.selectedPoints = [this.world.points.length-1];
                 }
             }
@@ -129,18 +177,18 @@ class PointTool {
 }
 const selectionManager = new Selections(world);
 const tools = {
-    // settings: {
-    //     element: document.getElementById('settings'), 
-    //     object: new PointTool(selectionManager)
-    // },
-    // select: {
-    //     element: document.getElementById('select'), 
-    //     object: new PointTool(selectionManager)
-    // },
-    // segment: {
-    //     element: document.getElementById('segment'), 
-    //     object: new PointTool(selectionManager)
-    // },
+    settings: {
+        element: document.getElementById('settings'), 
+        object: new SettingsTool(selectionManager)
+    },
+    select: {
+        element: document.getElementById('select'), 
+        object: new SelectTool(selectionManager)
+    },
+    segment: {
+        element: document.getElementById('segment'), 
+        object: new SegmentTool(selectionManager)
+    },
     point: {
         element: document.getElementById('point'), 
         object: new PointTool(selectionManager)
@@ -165,6 +213,7 @@ canvas.onmousedown = function(evt) {
         for (let k in tools) {
             if (tools[k]['object'].id == selectedTool) {
                 tools[k]['object'].onmousedown(evt);
+                break;
             }
         }
     }
@@ -174,6 +223,7 @@ canvas.onmouseup = function(evt) {
         for (let k in tools) {
             if (tools[k]['object'].id == selectedTool) {
                 tools[k]['object'].onmouseup(evt);
+                break;
             }
         }
     }
@@ -183,6 +233,7 @@ canvas.onmousemove = function(evt) {
         for (let k in tools) {
             if (tools[k]['object'].id == selectedTool) {
                 tools[k]['object'].onmousemove(evt);
+                break;
             }
         }
     }
