@@ -53,6 +53,27 @@ class World {
     }
 }
 
+class Segment {
+    constructor (world, p1, p2, length = -1) {
+        this.world = world;
+        this.world.segments.push(this);
+        if (length == -1) {
+            this.relax();
+        }
+        else {
+            this.length = length;
+        }
+        this.p1 = p1;
+        this.p2 = p2;
+    }
+    relax () {
+        this.length = Math.sqrt(this.p1.pos.sub(this.p2.pos).distSquared());
+    }
+    update () {
+        
+    }
+}
+
 class Point {
     constructor (world, pos, radius, mass = 1) {
         this.world = world;

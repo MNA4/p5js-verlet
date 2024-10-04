@@ -3,6 +3,40 @@ class Selections {
         this.world = world;
         this.selectedPoints = [];
         this.pointDatas = [];
+        this.tools = {
+            settings: {
+                element: document.getElementById('settings'), 
+                object: new SettingsTool(this)
+            },
+            select: {
+                element: document.getElementById('select'), 
+                object: new SelectTool(this)
+            },
+            segment: {
+                element: document.getElementById('segment'), 
+                object: new SegmentTool(this)
+            },
+            point: {
+                element: document.getElementById('point'), 
+                object: new PointTool(this)
+            } 
+        };
+    }
+    
+    onmousedown (evt) {
+        if (stopped) {
+            selectionManager.tools[selectedTool]['object'].onmousedown(evt);
+        }
+    }
+    onmouseup (evt) {
+        if (stopped) {
+            selectionManager.tools[selectedTool]['object'].onmouseup(evt);
+        }
+    }
+    onmousemove (evt) {
+        if (stopped) {
+            selectionManager.tools[selectedTool]['object'].onmousemove(evt);
+        }
     }
     drawSelections() {
         ctx.fillStyle = style.getPropertyValue('--hover')+'99';
@@ -174,73 +208,29 @@ class PointTool {
         this.world.renderObjects();
         this.selections.drawSelections();
     }
-}
-const selectionManager = new Selections(world);
-const tools = {
-    settings: {
-        element: document.getElementById('settings'), 
-        object: new SettingsTool(selectionManager)
-    },
-    select: {
-        element: document.getElementById('select'), 
-        object: new SelectTool(selectionManager)
-    },
-    segment: {
-        element: document.getElementById('segment'), 
-        object: new SegmentTool(selectionManager)
-    },
-    point: {
-        element: document.getElementById('point'), 
-        object: new PointTool(selectionManager)
-    } 
-};
-for (let k in tools) {
-    tools[k]['element'].onclick = function() {
-        selectedTool = k;
+    onkeypress (evt) {
+        if(evt.keyCode == 46) {
+
+        }
     }
 }
+const selectionManager = new Selections(world);
+
 let selectedTool = 'point';
 let shiftKey = false;
 let mouseDown = false;
-window.onmousedown = function() {
-    mouseDown = true;
-}
-window.onmouseup = function() {
-    mouseDown = false;
-}
-canvas.onmousedown = function(evt) {
-    if (stopped) {
-        for (let k in tools) {
-            if (tools[k]['object'].id == selectedTool) {
-                tools[k]['object'].onmousedown(evt);
-                break;
-            }
-        }
+
+for (let k in selectionManager.tools) {
+    selectionManager.tools[k]['element'].onclick = function() {
+        selectedTool = k;
     }
 }
-canvas.onmouseup = function(evt) {
-    if (stopped) {
-        for (let k in tools) {
-            if (tools[k]['object'].id == selectedTool) {
-                tools[k]['object'].onmouseup(evt);
-                break;
-            }
-        }
-    }
-}
-canvas.onmousemove = function(evt) {
-    if (stopped) {
-        for (let k in tools) {
-            if (tools[k]['object'].id == selectedTool) {
-                tools[k]['object'].onmousemove(evt);
-                break;
-            }
-        }
-    }
-}
-onkeydown = function(evt) {
-    shiftKey = evt.shiftKey;
-}
-onkeyup = function(evt) {
-    shiftKey = evt.shiftKey;
-}
+
+onmousedown = () => mouseDown = true;
+onmouseup = () => mouseDown = false;
+onkeydown = (evt) => shiftKey = evt.shiftKey;
+onkeyup = (evt) => shiftKey = evt.shiftKey;
+
+canvas.onmousedown = selectionManager.onmousedown;
+canvas.onmouseup = selectionManager.onmouseup;
+canvas.onmousemove = selectionManager.onmousemove;
